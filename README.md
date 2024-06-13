@@ -14,6 +14,10 @@ Use your favorite plugin manager to install `Araucaria`. For example, with Lazy.
   },
 ```
 
+## How to use
+
+Araucaria provides a command `:Araucaria` that opens a Telescope picker based on the current buffer, which should be a RSpec file.
+
 ## Roadmap
 
 - [ ] Add highlight groups to Telescope Picker
