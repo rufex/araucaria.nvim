@@ -77,6 +77,7 @@ local function open_telescope_spec(bufnr, items, opts)
   local previewers = require("telescope.previewers")
   local action_state = require("telescope.actions.state")
   local conf = require("telescope.config").values
+  local entry_display = require("telescope.pickers.entry_display")
 
   -- @param entry table: { keyword, indentation, text, keyword_node, description_node}
   local function make_entry(entry)
@@ -84,14 +85,30 @@ local function open_telescope_spec(bufnr, items, opts)
     local keyword_range = { keyword_node:range() }
     local keyword_start_row = keyword_range[1]
 
-    local entry_details = {
+    local displayer = entry_display.create({
+      separator = " ",
+      items = {
+        { width = #entry[2] },
+        { width = #entry[1] },
+        { width = #entry[3] },
+      },
+    })
+
+    local function make_display()
+      return displayer({
+        { entry[2], "Comment" }, -- Indentation
+        { entry[1], "@function.call.ruby" }, -- Keyword
+        { entry[3], "@string.ruby" }, -- Description
+      })
+    end
+
+    return {
       value = entry,
-      display = entry[2] .. entry[1] .. " " .. entry[3],
+      display = make_display,
       ordinal = entry[3],
       lnum = keyword_start_row + 1,
       filename = filename,
     }
-    return entry_details
   end
 
   local finder = finders.new_table({

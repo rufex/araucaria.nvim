@@ -36,7 +36,6 @@ Araucaria provides two commands:
 
 - [ ] Accept path as argument to `:Araucaria` command
 - [ ] Add keymap to open picker `:Araucaria` when selecting a file in `:AracuariaAll`
-- [ ] Add highlight groups to Telescope Picker in `:Araucaria`
 
 ## [Araucaria](https://en.m.wikipedia.org/wiki/Araucaria)
 
