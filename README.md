@@ -27,3 +27,5 @@ Araucaria provides a command `:Araucaria` that opens a Telescope picker based on
 ## [Araucaria](https://en.m.wikipedia.org/wiki/Araucaria)
 
 ![Araucaria](https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Araucaria_araucana%2C_Zainuco%2C_Neuquen%2C_Argentina.jpg/1530px-Araucaria_araucana%2C_Zainuco%2C_Neuquen%2C_Argentina.jpg)
+
+[Image by Dangelin5 - Own work, CC BY-SA 4.0](https://commons.wikimedia.org/w/index.php?curid=57620752)
