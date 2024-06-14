@@ -78,8 +78,7 @@ local function open_telescope_spec(bufnr, items, opts)
   local action_state = require("telescope.actions.state")
   local conf = require("telescope.config").values
 
-  -- TODO: define tipe
-  -- entry: { keyword, indentation, text, keyword_node, description_node}
+  -- @param entry table: { keyword, indentation, text, keyword_node, description_node}
   local function make_entry(entry)
     local keyword_node = entry[4]
     local keyword_range = { keyword_node:range() }
@@ -124,6 +123,87 @@ local function open_telescope_spec(bufnr, items, opts)
     :find()
 end
 
+local function get_git_files()
+  local git_files_output = vim.fn.systemlist("git ls-files")
+  if vim.v.shell_error ~= 0 then
+    vim.notify("Failed to retrieve git files or not a git repository", vim.log.levels.ERROR)
+    return
+  end
+
+  return git_files_output
+end
+
+local function get_rspec_files(files)
+  local rspec_files = {}
+  for _, file in ipairs(files) do
+    if string.match(file, "_spec.rb") then
+      table.insert(rspec_files, file)
+    end
+  end
+  return rspec_files
+end
+
+local function get_path_items(path)
+  local components = {}
+  for part in path:gmatch("[^/]+") do
+    table.insert(components, part)
+  end
+
+  local file_name = table.remove(components) -- Get the last component
+  local base_name = file_name:match("(.+)%..+$") or file_name -- Remove the file extension
+  local name_without_spec = base_name:gsub("_spec$", "") -- Remove '_spec'
+  local pascal_case_name = name_without_spec:gsub("_(%l)", string.upper):gsub("^%l", string.upper) -- Convert to PascalCase
+
+  for i, part in ipairs(components) do
+    components[i] = part:gsub("_(%l)", string.upper):gsub("^%l", string.upper) -- Convert to PascalCase
+  end
+
+  table.insert(components, pascal_case_name)
+
+  return components
+end
+
+local function open_telescope_specs_list(file_paths, opts)
+  opts = opts or {}
+
+  local pickers = require("telescope.pickers")
+  local finders = require("telescope.finders")
+  local previewers = require("telescope.previewers")
+  local conf = require("telescope.config").values
+
+  -- @param entry string: 'file path'
+  local function make_entry(entry)
+    local path_items = get_path_items(entry)
+    local display_path = table.concat(path_items, " > ")
+
+    local entry_details = {
+      value = entry,
+      display = display_path,
+      ordinal = display_path,
+      lnum = 0,
+      filename = entry,
+    }
+    return entry_details
+  end
+
+  local finder = finders.new_table({
+    results = file_paths,
+    entry_maker = make_entry,
+  })
+
+  pickers
+    .new(opts, {
+      prompt_title = "Find Spec File",
+      results_title = "Araucaria - RSpec Files",
+      sorting_strategy = "ascending",
+      initial_mode = "insert",
+      finder = finder,
+      sorter = conf.generic_sorter(opts),
+      previewer = previewers.vim_buffer_vimgrep.new(opts),
+    })
+    :find()
+end
+
 local M = {}
 
 function M.araucaria_tree(bufnr)
@@ -136,8 +216,20 @@ function M.araucaria_tree(bufnr)
   open_telescope_spec(bufnr, items, {})
 end
 
+function M.araucaria_list_files()
+  local git_files = get_git_files()
+  local rspec_files = get_rspec_files(git_files)
+
+  if not rspec_files then
+    return
+  end
+
+  open_telescope_specs_list(rspec_files, {})
+end
+
 function M.register_commands()
   vim.cmd("command! Araucaria lua require('araucaria').araucaria_tree()")
+  vim.cmd("command! AraucariaAll lua require('araucaria').araucaria_list_files()")
 end
 
 function M.setup(opts)

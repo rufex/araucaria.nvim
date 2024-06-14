@@ -11,18 +11,22 @@ Use your favorite plugin manager to install `Araucaria`. For example, with Lazy.
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'nvim-telescope/telescope.nvim',
+    'nvim-lua/plenary.nvim' -- Required by Telescope
   },
 ```
 
 ## How to use
 
-Araucaria provides a command `:Araucaria` that opens a Telescope picker based on the current buffer, which should be a RSpec file.
+Araucaria provides two commands:
+
+- `:Araucaria` that opens a Telescope picker based on the current buffer, which should be a RSpec file.
+- `:AraucariaAll` that opens a Telescope picker to select between all RSpec files in the project.
 
 ## Roadmap
 
-- [ ] Add highlight groups to Telescope Picker
 - [ ] Accept path as argument to `:Araucaria` command
-- [ ] New Telescope picker to select between all RSpec files
+- [ ] Add keymap to open picker `:Araucaria` when selecting a file in `:AracuariaAll`
+- [ ] Add highlight groups to Telescope Picker in `:Araucaria`
 
 ## [Araucaria](https://en.m.wikipedia.org/wiki/Araucaria)
 
