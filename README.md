@@ -22,6 +22,16 @@ Araucaria provides two commands:
 - `:Araucaria` that opens a Telescope picker based on the current buffer, which should be a RSpec file.
 - `:AraucariaAll` that opens a Telescope picker to select between all RSpec files in the project.
 
+## Screenshots
+
+### `:Araucaria`
+
+![Araucaria](./assets/araucaria.png)
+
+### `:AraucariaAll`
+
+![AraucariaAll](./assets/araucaria_all.png)
+
 ## Roadmap
 
 - [ ] Accept path as argument to `:Araucaria` command
