@@ -27,6 +27,23 @@ local function check_filename(bufnr)
   return true
 end
 
+--- Open file in tab
+-- @param file_path [string] The file path to open
+-- @return [number] The buffer number
+local function open_file(file_path)
+  if file_path == "" then
+    return
+  end
+
+  vim.cmd("tabfind " .. file_path)
+  local bufnr = vim.fn.bufnr(file_path)
+  return bufnr
+end
+
+--- Retrieves all 'RSpec' items from the buffer
+-- @param bufnr [number] (optional) The buffer number to extract items from. Defaults to the current buffer.
+-- @return [table] A table containing items found in the buffer. Each item is a table with keyword text, indentation,
+-- description text, keyword node, and description node.
 local function get_buffer_items(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
 
@@ -223,7 +240,15 @@ end
 
 local M = {}
 
-function M.araucaria_tree(bufnr)
+--- Open a telescope picker to show the RSpec tree
+-- @param file_path [string|nil] The optional file path to open. If not provided, the current buffer will be used.
+-- @return [nil] This function does not return any value.
+function M.araucaria_tree(file_path)
+  local bufnr = vim.api.nvim_get_current_buf()
+  if file_path then
+    bufnr = open_file(file_path)
+  end
+
   local items = get_buffer_items(bufnr)
 
   if not items then
@@ -245,7 +270,7 @@ function M.araucaria_list_files()
 end
 
 function M.register_commands()
-  vim.cmd("command! Araucaria lua require('araucaria').araucaria_tree()")
+  vim.cmd("command! -nargs=? Araucaria lua require('araucaria').araucaria_tree(<q-args>)")
   vim.cmd("command! AraucariaAll lua require('araucaria').araucaria_list_files()")
 end
 
