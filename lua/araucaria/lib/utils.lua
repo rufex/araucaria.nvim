@@ -20,10 +20,13 @@ local function get_tree_root(bufnr)
   return tree:root()
 end
 
-local function check_filename(bufnr)
+function M.check_rspec_file(bufnr, silent)
+  silent = silent or false
   local filename = vim.api.nvim_buf_get_name(bufnr)
   if not string.match(filename, "_spec.rb") then
-    vim.notify("Araucaria can only be used in Ruby Rspecs", vim.log.levels.ERROR)
+    if not silent then
+      vim.notify("Araucaria can only be used in Ruby Rspecs", vim.log.levels.ERROR)
+    end
     return false
   end
   return true
@@ -85,11 +88,12 @@ end
 --- Retrieves all 'RSpec' items from the buffer
 -- @param bufnr [number] (optional) The buffer number to extract items from. Defaults to the current buffer.
 -- @return [table] A table containing items found in the buffer. Each item is a table with keyword text, indentation,
--- description text, keyword node, and description node.
+-- description text, keyword node, description node and filename.
 function M.get_buffer_items(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
+  local filename = vim.api.nvim_buf_get_name(bufnr)
 
-  if not check_filename(bufnr) then
+  if not M.check_rspec_file(bufnr) then
     return
   end
 
@@ -114,7 +118,7 @@ function M.get_buffer_items(bufnr)
 
     if name ~= "keyword" then
       local description_text = text
-      table.insert(items, { keyword_text, indentation, description_text, keyword_node, node })
+      table.insert(items, { keyword_text, indentation, description_text, keyword_node, node, filename })
       keyword_text = ""
     end
   end

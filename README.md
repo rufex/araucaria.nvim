@@ -19,8 +19,11 @@ Use your favorite plugin manager to install `Araucaria`. For example, with Lazy.
 
 Araucaria provides two commands:
 
-- `:Araucaria` that opens a Telescope picker based on the current buffer, which should be a RSpec file.
-- `:AraucariaAll` that opens a Telescope picker to select between all RSpec files in the project.
+- :AraucariaBuff - Opens a Telescope picker to show all RSpec tests for the provided buffer or current buffer if not specified.
+- :AraucariaAll - Opens a Telescope picker to show all RSpec files in the project.
+- :Araucaria - Combines the functionality of :AraucariaBuff and :AraucariaAll:
+  - If the current buffer is an RSpec file, it behaves like `:AraucariaBuff`.
+  - If the current buffer is not an RSpec file, it behaves like `:AraucariaAll`, and after selecting an RSpec file, it opens that file's RSpec tests as `ArucariaBuff`.
 
 ## Screenshots
 
@@ -34,8 +37,7 @@ Araucaria provides two commands:
 
 ## Roadmap
 
-- [ ] Accept path as argument to `:Araucaria` command
-- [ ] Add keymap to open picker `:Araucaria` when selecting a file in `:AracuariaAll`
+- [ ] FZF ?
 
 ## [Araucaria](https://en.m.wikipedia.org/wiki/Araucaria)
 
