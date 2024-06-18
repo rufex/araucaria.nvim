@@ -11,7 +11,7 @@ Use your favorite plugin manager to install `Araucaria`. For example, with Lazy.
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'nvim-telescope/telescope.nvim',
-    'nvim-lua/plenary.nvim' -- Required by Telescope
+    'nvim-lua/plenary.nvim'
   },
 ```
 

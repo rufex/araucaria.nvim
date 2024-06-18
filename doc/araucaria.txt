@@ -1,0 +1,66 @@
+*araucaria.txt*                 Neovim plugin to navigate through RSpec files.
+
+==============================================================================
+
+1. Installation                                    *araucaria-installation*
+2. Commands                                        *araucaria-commands*
+3. Usage                                           *araucaria-usage*
+
+==============================================================================
+
+1. Installation                                    *araucaria-installation*
+
+Use your favorite plugin manager to install `Araucaria`. For example, with Lazy.vim:
+
+> 
+  'rufex/araucaria.nvim',
+  dependencies = {
+    'nvim-treesitter/nvim-treesitter',
+    'nvim-telescope/telescope.nvim',
+    'nvim-lua/plenary.nvim'
+  },
+<
+
+==============================================================================
+
+2. Commands                                        *araucaria-commands*
+
+Araucaria provides three main commands:
+
+                                                    *:AraucariaBuff*
+`:AraucariaBuff` 
+   Opens a Telescope picker to show all RSpec tests for the provided buffer
+   or current buffer if not specified.
+   Usage: 
+   >
+   :AraucariaBuff [buffer_number]
+   <
+
+                                                    *:AraucariaAll*
+`:AraucariaAll`
+   Opens a Telescope picker to show all RSpec files in the project.
+   Usage:
+   >
+   :AraucariaAll
+   <
+
+                                                    *:Araucaria*
+`:Araucaria`
+   Combines the functionality of `:AraucariaBuff` and `:AraucariaAll`:
+   - If the current buffer is an RSpec file, it behaves like `:AraucariaBuff`.
+   - If the current buffer is not an RSpec file, it behaves like `:AraucariaAll`, 
+     and after selecting an RSpec file, it opens that file's RSpec tests as `AraucariaBuff`.
+   Usage:
+   >
+   :Araucaria
+   <
+
+==============================================================================
+
+3. Usage                                           *araucaria-usage*
+
+Use one of the provided commands (`:AraucariaBuff`, `:AraucariaAll`, or `:Araucaria`) to navigate through RSpec files.
+
+==============================================================================
+
+vim:tw=78:ts=8:ft=help:norl
