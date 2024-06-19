@@ -52,7 +52,6 @@ function M.list_files_and_specs()
       return
     end
     pickers.open_telescope_files_and_specs(rspec_files, {})
-    -- TODO: Open spec with selected file
   end
 end
 

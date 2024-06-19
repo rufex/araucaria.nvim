@@ -12,7 +12,7 @@
 
 Use your favorite plugin manager to install `Araucaria`. For example, with Lazy.vim:
 
-> 
+>lua
   'rufex/araucaria.nvim',
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
@@ -31,8 +31,9 @@ Araucaria provides three main commands:
 `:AraucariaBuff` 
    Opens a Telescope picker to show all RSpec tests for the provided buffer
    or current buffer if not specified.
-   Usage: 
-   >
+   Usage:
+
+   >lua
    :AraucariaBuff [buffer_number]
    <
 
@@ -40,18 +41,20 @@ Araucaria provides three main commands:
 `:AraucariaAll`
    Opens a Telescope picker to show all RSpec files in the project.
    Usage:
-   >
+
+   >lua
    :AraucariaAll
    <
 
                                                     *:Araucaria*
 `:Araucaria`
-   Combines the functionality of `:AraucariaBuff` and `:AraucariaAll`:
-   - If the current buffer is an RSpec file, it behaves like `:AraucariaBuff`.
-   - If the current buffer is not an RSpec file, it behaves like `:AraucariaAll`, 
-     and after selecting an RSpec file, it opens that file's RSpec tests as `AraucariaBuff`.
+   Combines the functionality of `:AraucariaBuff` and `:AraucariaAll` into a single command. It behaves as follows:
+   - If the current buffer is an RSpec file, it behaves like `:AraucariaBuff`, and lists the current buffer's RSpec tests.
+   - If the current buffer is not an RSpec file, it behaves first like `:AraucariaAll`, listing all RSpec files in the project.
+     After selecting a RSpec file, it opens that file's RSpec tests as `:AraucariaBuff`.
    Usage:
-   >
+
+   >lua
    :Araucaria
    <
 
